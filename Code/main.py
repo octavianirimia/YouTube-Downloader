@@ -1,22 +1,16 @@
 import flet
 
-from download_video import download_video
 from gui import window
 
-# url test: https://www.youtube.com/watch?v=_TtFTSv42bY
 
 
-def main():
-    
-    #flet.app(target = window)
-
-    # Get url
-
-    url: str = input('Please enter the video url: ')
-
-    download_video(url = url)
+def main():    
+    flet.app(target = window)
 
 
 
 if __name__ == '__main__':
     main()
+
+# Test url: https://www.youtube.com/watch?v=_TtFTSv42bY
+# Age restricted test url: https://www.youtube.com/watch?v=fYH8eSiOf5I
