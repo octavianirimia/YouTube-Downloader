@@ -21,19 +21,17 @@ def get_video_resolutions(url: str):
     try:
         video = pytube.YouTube(url = url)
 
-        video_resolutions = []
-        videos = []
+        stream_resolutions = []
 
-        for stream in video.streams.filter(progressive = True, file_extension = 'mp4').order_by(attribute_name = 'resolution'):
-            video_resolutions.append(stream.resolution)
-            videos.append(stream)
+        for stream in video.streams.order_by(attribute_name = 'resolution'):
+            stream_resolutions.append(stream.resolution)
         
-        video_resolutions = list(dict.fromkeys(video_resolutions))
+        stream_resolutions = list(dict.fromkeys(stream_resolutions))
 
-        return videos, video_resolutions
+        return stream_resolutions
 
     except Exception as exception:
-        return exception, None
+        return exception
 
 
 
@@ -42,9 +40,10 @@ def download_video(url: str, resolution: str) -> None:
     ssl._create_default_https_context = ssl._create_stdlib_context
 
     try:
-        video: pytube.YouTube = pytube.YouTube(url = url).streams.filter(resolution = resolution, progressive = True)
+        print(resolution)
+        pytube.YouTube = pytube.YouTube(url = url).streams.filter(resolution = resolution).first().download()
 
         print('Video was downloaded!')
     
-    except Exception:
-        print(Exception)
+    except Exception as exception:
+        print(exception)
