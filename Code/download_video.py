@@ -26,13 +26,12 @@ def get_video_resolutions(url: str):
 
 
 
-def download_video(url: str, resolution: str) -> None:
+def download_video(url: str, resolution: str, path: str) -> None:
 
     ssl._create_default_https_context = ssl._create_stdlib_context
 
     try:
-        pytube.YouTube = pytube.YouTube(url = url).streams.filter(resolution = resolution).first().download()
+        pytube.YouTube = pytube.YouTube(url = url).streams.filter(resolution = resolution).first().download(output_path = path)
     
     except Exception:
         pass
-    #
