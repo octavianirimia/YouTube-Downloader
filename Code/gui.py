@@ -4,75 +4,71 @@ from download_video import get_video_resolutions, download_video
 
 
 
-class Resolutions:
-    def __init__(self):
-        self.result: list | Exception = None
-
-
-
-def list_available_resolutions(
-        page: flet.Page, url: str, stream_resolutions: Resolutions, submit_url_button: flet.ElevatedButton, exception_text_field: flet.Text,
-        available_resolutions_dropdown: flet.Dropdown, download_button: flet.ElevatedButton, submit_row: flet.Row) -> None:
-
-    progress_ring = flet.ProgressRing(width=16,height=16,stroke_width=2)
-    submit_row.controls.append(progress_ring)
-    submit_row.update()
-    
-    stream_resolutions.result = get_video_resolutions(url = url)
-
-    if isinstance(stream_resolutions.result, Exception):
-        submit_url_button.disabled = True
-        exception_text_field.value = stream_resolutions.result
-        page.add(exception_text_field)
-
-        if available_resolutions_dropdown in page.controls:
-            page.remove(available_resolutions_dropdown)
-
-        submit_row.controls.remove(progress_ring)
-        submit_row.update()
-    
-    else:
-        submit_row.controls.remove(progress_ring)
-        for stream_resolution in stream_resolutions.result:
-            available_resolutions_dropdown.options.append(flet.dropdown.Option(key = stream_resolution))
-
-        page.add(available_resolutions_dropdown)#, download_button)
-
-
-
-def reset_submit_url_button(page: flet.Page, submit_url_button: flet.ElevatedButton, exception_text_field: flet.Text) -> None:
-
-    submit_url_button.disabled = False
-
-    if exception_text_field in page.controls:
-        page.remove(exception_text_field)
-
-
-
-def select_download_directory(page: flet.Page, select_download_directory_button: flet.ElevatedButton, directory_path_text_field: flet.Text) -> None:
-    page.add(
-        flet.Row(
-            [
-                select_download_directory_button,
-                directory_path_text_field
-            ]
-        )
-    )
-
-
-
-def download(page: flet.Page, download_button: flet.ElevatedButton) -> None:
-    page.add(download_button)
-
-
-
 def window(page: flet.Page):
+
+    # Useful functions
+
+    def reset_submit_url_button(event) -> None:
+        submit_url_button.disabled = False
+        submit_url_button.update()
+
+
+        if exception_text_field in page.controls:
+            page.remove(exception_text_field)
+        
+        if available_resolutions_dropdown in page.controls:
+            available_resolutions_dropdown.value = None
+            available_resolutions_dropdown.options = None
+            page.remove(available_resolutions_dropdown)
+        
+        if select_download_directory_button in page.controls:
+            page.remove(select_download_directory_button)
+        
+        if directory_path_text_field in page.controls:
+            page.remove(directory_path_text_field)
+        
+        if download_button in page.controls:
+            page.remove(download_button)
+
+
+    def list_video_available_resolutions(event) -> None:
+
+        submit_url_progress_ring.opacity = 1
+        submit_url_progress_ring.update()
+        
+        stream_resolutions: list | Exception = get_video_resolutions(url_text_field.value)
+
+        if isinstance(stream_resolutions, Exception):
+            submit_url_button.disabled = True
+            exception_text_field.value = stream_resolutions
+            page.add(exception_text_field)
+
+            if available_resolutions_dropdown in page.controls:
+                page.remove(available_resolutions_dropdown)
+            
+            submit_url_progress_ring.opacity = 0
+            submit_url_progress_ring.update()
+        
+        else:
+            submit_url_progress_ring.opacity = 0
+            submit_url_progress_ring.update()
+
+            for stream_resolution in stream_resolutions:
+
+                available_resolutions_dropdown.options.append(flet.dropdown.Option(key = stream_resolution))
+
+            page.add(available_resolutions_dropdown)
+    
+
+    def add_select_download_directory_button(event) -> None:
+        page.add(select_download_directory_button)
+
 
     def get_directory_path(event: flet.FilePickerResultEvent):
 
         if event.path:
             directory_path_text_field.value = event.path
-            download(page = page, download_button = download_button)
+            page.add(directory_path_text_field, download_button)
         
         else:
             directory_path_text_field.value = "Cancelled!"
@@ -80,29 +76,33 @@ def window(page: flet.Page):
         directory_path_text_field.update()
 
 
-    stream_resolutions: Resolutions = Resolutions()
-
     # Window settings
     page.title = "YouTube Downloader"
-    #page.horizontal_alignment = flet.CrossAxisAlignment.CENTER
+    page.window_width, page.window_height = 600, 400
+    page.window_resizable = False
+    page.horizontal_alignment = flet.CrossAxisAlignment.CENTER
 
     # Interface widgets
-    url_field: flet.TextField = flet.TextField(
+    url_text_field: flet.TextField = flet.TextField(
         label = "Video URL",
         autofocus = True,
-        on_change = lambda _:reset_submit_url_button(page = page, submit_url_button = submit_url_button,exception_text_field = exception_text_field)
+        on_change = reset_submit_url_button
     )
 
     submit_url_button : flet.ElevatedButton = flet.ElevatedButton(
         text = 'Submit URL',
-        on_click = lambda _: list_available_resolutions(
-            url = url_field.value, stream_resolutions = stream_resolutions, page = page, submit_url_button = submit_url_button,
-            exception_text_field = exception_text_field, available_resolutions_dropdown = available_resolutions_dropdown,
-            download_button = download_button, submit_row = submit_row
-        )
+        on_click = list_video_available_resolutions
     )
 
+    submit_url_progress_ring = flet.ProgressRing(width = 16, height = 16, stroke_width = 2, opacity = 0)
+
+    submit_row: flet.Row = flet.Row([submit_url_button, submit_url_progress_ring], alignment=flet.MainAxisAlignment.CENTER)
+
+    page.add(url_text_field, submit_row)
+
     exception_text_field: flet.Text = flet.Text(color = 'red')
+
+    available_resolutions_dropdown = flet.Dropdown(on_change = add_select_download_directory_button)
 
     directory_path_text_field: flet.Text = flet.Text()
     directory_dialog = flet.FilePicker(on_result = get_directory_path)
@@ -114,13 +114,11 @@ def window(page: flet.Page):
         on_click = lambda _: directory_dialog.get_directory_path(),
     )
 
-    available_resolutions_dropdown = flet.Dropdown(on_change = lambda _: select_download_directory(page, select_download_directory_button, directory_path_text_field))
-
     download_button: flet.ElevatedButton = flet.ElevatedButton(
         text = 'Download',
-        on_click = lambda _: download_video(url = url_field.value, resolution = available_resolutions_dropdown.value, path = directory_path_text_field.value)
+        on_click = lambda _: download_video(
+            url = url_text_field.value,
+            resolution = available_resolutions_dropdown.value,
+            path = directory_path_text_field.value
+        )
     )
-
-    submit_row: flet.Row = flet.Row([submit_url_button], alignment=flet.MainAxisAlignment.CENTER)
-
-    page.add(url_field, submit_row)
