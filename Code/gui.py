@@ -9,7 +9,7 @@ def window(page: flet.Page):
     # Useful functions
 
     def reset_submit_url_button(event) -> None:
-        
+
         submit_url_button.disabled = False
         submit_url_button.update()
 
@@ -27,15 +27,18 @@ def window(page: flet.Page):
         if directory_path_text_field in page.controls:
             page.remove(directory_path_text_field)
         
-        if download_button in page.controls:
-            page.remove(download_button)
+        if download_row in page.controls:
+            page.remove(download_row)
+        
+        if successful_download_text_field in page.controls:
+            page.remove(successful_download_text_field)
 
 
     def list_video_available_resolutions(event) -> None:
 
         submit_url_progress_ring.opacity = 1
         submit_url_progress_ring.update()
-        
+        print(type(url_text_field.value))
         stream_resolutions: list | Exception = get_video_resolutions(url_text_field.value)
 
         if isinstance(stream_resolutions, Exception):
@@ -68,12 +71,34 @@ def window(page: flet.Page):
 
         if event.path:
             directory_path_text_field.value = event.path
-            page.add(directory_path_text_field, download_button)
+            page.add(directory_path_text_field, download_row)
         
         else:
             directory_path_text_field.value = "Cancelled!"
 
         directory_path_text_field.update()
+    
+
+    def video_download(event) -> None:
+
+        download_video_progress_ring.opacity = 1
+        download_video_progress_ring.update()
+
+        exception: Exception = download_video(
+            url = url_text_field.value,
+            resolution = available_resolutions_dropdown.value,
+            path = directory_path_text_field.value
+        )
+
+        download_video_progress_ring.opacity = 0
+        download_video_progress_ring.update()
+
+        if isinstance(exception, Exception):
+            exception_text_field.value = exception
+            page.add(exception_text_field)
+        
+        else:
+            page.add(successful_download_text_field)
 
 
     # Window settings
@@ -114,11 +139,14 @@ def window(page: flet.Page):
         on_click = lambda _: directory_dialog.get_directory_path(),
     )
 
-    download_button: flet.ElevatedButton = flet.ElevatedButton(
-        text = 'Download',
-        on_click = lambda _: download_video(
-            url = url_text_field.value,
-            resolution = available_resolutions_dropdown.value,
-            path = directory_path_text_field.value
-        )
+    download_button: flet.ElevatedButton = flet.ElevatedButton(text = 'Download', on_click = video_download)
+
+    download_video_progress_ring = flet.ProgressRing(width = 16, height = 16, stroke_width = 2, opacity = 0)
+
+    download_row = flet.Row([download_button, download_video_progress_ring], alignment = flet.MainAxisAlignment.CENTER)
+
+    successful_download_text_field: flet.Text = flet.Text(
+        value = 'Video downloaded successfully!',
+        color = 'green',
+        weight = flet.FontWeight.BOLD
     )
