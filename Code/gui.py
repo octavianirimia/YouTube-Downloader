@@ -9,9 +9,9 @@ def window(page: flet.Page):
     # Useful functions
 
     def reset_submit_url_button(event) -> None:
+        
         submit_url_button.disabled = False
         submit_url_button.update()
-
 
         if exception_text_field in page.controls:
             page.remove(exception_text_field)
