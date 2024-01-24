@@ -24,7 +24,7 @@ def get_video_resolutions(url: str):
 
 
 
-def download_video(url: str, resolution: str, path: str) -> None:
+def download_video(url: str, resolution: str, path: str):
 
     ssl._create_default_https_context = ssl._create_stdlib_context
 
