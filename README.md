@@ -17,25 +17,25 @@ It is an application written in Python with the help of pytube and flet packages
 
 If you want to work on this project locally on your computer you should follow the instructions below.
 
-### Prerequisites
-
-You should have Python installed (this application was testes using Python 3.12.1
 
 ### Windows
 
 #### Prerequisites
 
-1. Clone the repo
-   
+* A code editor (I used Visual Studio Code installed from Microsoft Store)
+* Python installed (I used Python 3.12.1 installed from Microsoft Store)
+* Git (Download it from the official website)
+
+1. Open Git Bash go to the desired location and clone the repo
+
    ```sh
    git clone https://github.com/octavianirimia/YouTube-Downloader.git
    ```
 
-   Then you should open your favourite code editor (I used Visual Studio Code) and open the cloned folder.
+2. Open your code editor and navigate to your cloned folder (In visual studio code go to File and click Open folder)
 
 3. Create a Python virtual environment
 
-   In
    ```sh
    python -m venv .YouTube_Downloader
    ```
