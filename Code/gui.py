@@ -38,8 +38,8 @@ def window(page: flet.Page):
 
         submit_url_progress_ring.opacity = 1
         submit_url_progress_ring.update()
-        print(type(url_text_field.value))
-        stream_resolutions: list | Exception = get_video_resolutions(url_text_field.value)
+
+        stream_resolutions: list | Exception = get_video_resolutions(url = url_text_field.value)
 
         if isinstance(stream_resolutions, Exception):
             submit_url_button.disabled = True
