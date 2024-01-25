@@ -23,12 +23,19 @@ You should have Python installed (this application was testes using Python 3.12.
 
 ### Windows
 
-1. Clone the repo
-```sh
-git clone https://github.com/octavianirimia/YouTube-Downloader.git
-```
+#### Prerequisites
 
-2. Create a Python virtual environment
+1. Clone the repo
+   
+   ```sh
+   git clone https://github.com/octavianirimia/YouTube-Downloader.git
+   ```
+
+   Then you should open your favourite code editor (I used Visual Studio Code) and open the cloned folder.
+
+3. Create a Python virtual environment
+
+   In
    ```sh
    python -m venv .YouTube_Downloader
    ```
