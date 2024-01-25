@@ -26,7 +26,6 @@ If you want to work on this project locally on your computer you should follow t
 * Python installed (I used Python 3.12.1 installed from Microsoft Store)
 * Git (Download it from the official website)
 
-
 1. Open Git Bash go to the desired location and clone the repo
 
    ```sh
@@ -35,8 +34,22 @@ If you want to work on this project locally on your computer you should follow t
 
 2. Open your code editor and navigate to your cloned folder (In visual studio code go to File and click Open folder)
 
-3. Create a Python virtual environment
+3. Create a Python virtual environment from the code editor terminal
 
    ```sh
    python -m venv .YouTube_Downloader
    ```
+
+4. Activate Python virtual environment from the code editor terminal
+
+   ```sh
+   .YouTube_Downloader\Scripts\activate
+   ```
+
+5. Install the necessary packages
+
+   ```sh
+   pip install flet pytube
+   ```
+
+Now you can run the program from the main.py file
