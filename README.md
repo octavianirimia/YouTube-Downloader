@@ -17,7 +17,7 @@ It is an application written in Python with the help of pytube and flet packages
 
 If you want to work on this project locally on your computer you should follow the instructions below.
 
-* Windows
+### Windows
 1. Clone the repo
 ```sh
 git clone https://github.com/octavianirimia/YouTube-Downloader.git
