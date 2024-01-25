@@ -55,6 +55,9 @@ If you want to work on this project locally on your computer you should follow t
 Now you can run the program from the main.py file
 
 
+
+
+
 ### Mac
 
 #### Prerequisites
