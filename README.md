@@ -127,3 +127,20 @@ Now you can run the program from the main.py file
    ```
 
 Now you can run the program from the main.py file
+
+
+## Application
+
+I also created an application that can be run independently
+
+### Windows
+
+Download the "windows" archive from the "App" folder, extract it and run "app.exe".
+
+### Mac
+
+_Comming soon_
+
+### Linux (Ubuntu)
+
+_Comming soon_
