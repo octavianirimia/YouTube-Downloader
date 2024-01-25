@@ -26,6 +26,7 @@ If you want to work on this project locally on your computer you should follow t
 * Python installed (I used Python 3.12.1 installed from Microsoft Store)
 * Git (Download it from the official website)
 
+
 1. Open Git Bash go to the desired location and clone the repo
 
    ```sh
