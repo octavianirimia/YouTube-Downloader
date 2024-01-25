@@ -53,3 +53,41 @@ If you want to work on this project locally on your computer you should follow t
    ```
 
 Now you can run the program from the main.py file
+
+
+### Mac
+
+#### Prerequisites
+
+* A code editor (I used Visual Studio Code installed from the official website)
+* Python installed (I used Python 3.12.1 installed from the official website. Macs already have Python installed but it's an older version)
+
+1. Open your terminal and install command line tools
+
+   ```sh
+   xcode-select --install
+   ```
+
+2. Open your code editor and navigate to your cloned folder (In visual studio code go to File and click Open folder)
+
+3. Create a Python virtual environment from the code editor terminal
+
+   If you want to use the python version you have installed type "python3.xy -m venv .YouTube_Downloader". If you only type only "python3 -m venv .YouTube_Downloader" you are using the default installation of Python.
+
+   ```sh
+   python3.12 -m venv .YouTube_Downloader
+   ```
+
+5. Activate Python virtual environment from the code editor terminal
+
+   ```sh
+   source ".YouTube_Downloader/bin/activate"
+   ```
+
+6. Install the necessary packages from the code editor terminal
+
+   ```sh
+   pip install flet pytube
+   ```
+
+Now you can run the program from the main.py file
