@@ -6,5 +6,18 @@ This application can help you download a video from YouTube at the desired quali
 
 It is an application written in Python with the help of pytube and flet packages.
 
-## Requirements:
-pytube, flet
+
+### Built with
+
+- Python
+- Pytube
+- Flet
+
+## Getting started
+
+If you want to work on this project locally on your computer you should follow the instructions below.
+
+* Windows
+  '''sh
+  git clone https://github.com/octavianirimia/YouTube-Downloader.git
+  '''
