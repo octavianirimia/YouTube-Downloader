@@ -143,4 +143,4 @@ Download the "linux" archive from the "App" folder, extract it and run the app.
 
 ### Linux (Ubuntu)
 
-_Comming soon_
+_Coming soon_
