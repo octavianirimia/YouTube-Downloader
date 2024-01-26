@@ -139,7 +139,7 @@ Download the "windows" archive from the "App" folder, extract it and run "app.ex
 
 ### Mac
 
-_Comming soon_
+Download the "linux" archive from the "App" folder, extract it and run the app.
 
 ### Linux (Ubuntu)
 
